@@ -2,12 +2,13 @@ package com.ilyachuvaev.services.endpoints;
 
 import com.ilyachuvaev.services.ContactService;
 
+import com.ilyachuvaev.webservices.Contact;
 import com.ilyachuvaev.webservices.contactservice.ContactDetailsRequest;
 import com.ilyachuvaev.webservices.contactservice.ContactDetailsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -27,32 +28,35 @@ public class ContactServiceEndpoint {
     }
 
     @PayloadRoot(localPart = "ContactDetailsRequest", namespace = TARGET_NAMESPACE)
-    @RequestMapping(value = "/")
+    @RequestMapping(value = "/contact/{contactId}", method = RequestMethod.GET)
     public @ResponsePayload
-    ContactDetailsResponse getContactDetails(@RequestPayload ContactDetailsRequest request) {
+    ContactDetailsResponse getContactDetails(@RequestPayload ContactDetailsRequest request, @RequestParam Long contactId) {
         ContactDetailsResponse response = new ContactDetailsResponse();
-        response.setContactDetails(contactService.getContactDetails(request.getId()));
+        response.setContactDetails(contactService.getContactDetails(contactId));
         return response;
     }
 
     @PayloadRoot(localPart = "ContactDetailsRequest", namespace = TARGET_NAMESPACE)
+    @RequestMapping(value = "/contact", method = RequestMethod.POST)
     public long addContact(@RequestAttribute ContactDetailsRequest request) {
-        ContactDetailsResponse response = new ContactDetailsResponse();
-
-        return response;
+        Contact contact = request.getContactDetails();
+                contactService.saveOrUpdate(contact);
+        return contact.getId();
     }
 
     @PayloadRoot(localPart = "ContactDetailsRequest", namespace = TARGET_NAMESPACE)
-    public long updataContact(@RequestAttribute ContactDetailsRequest request) {
-        ContactDetailsResponse response = new ContactDetailsResponse();
-
-        return response;
+    @RequestMapping(value = "/contact", method = RequestMethod.PUT)
+    public long updateContact(@RequestAttribute ContactDetailsRequest request) {
+        Contact contact = request.getContactDetails();
+        contactService.saveOrUpdate(contact);
+        return contact.getId();
     }
 
     @PayloadRoot(localPart = "ContactDetailsRequest", namespace = TARGET_NAMESPACE)
-    public long deleteContact(@RequestAttribute ContactDetailsRequest request) {
-        ContactDetailsResponse response = new ContactDetailsResponse();
-
-        return response;
+    @RequestMapping(value = "/contact/{contactId}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public long deleteContact(@RequestAttribute ContactDetailsRequest request, @RequestParam Long contactId) {
+        contactService.delete(contactId);
+        return contactId;
     }
 }
