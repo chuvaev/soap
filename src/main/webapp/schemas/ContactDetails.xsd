@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://webservices.ilyachuvaev.com"
+           targetNamespace="http://webservices.ilyachuvaev.com"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:element name="Contact" type="Contact"/>
+    <xs:complexType name="Contact">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="firstName" type="xs:string"/>
+            <xs:element name="lastName" type="xs:string"/>
+            <xs:element name="phone" type="xs:string"/>
+            <xs:element name="email" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

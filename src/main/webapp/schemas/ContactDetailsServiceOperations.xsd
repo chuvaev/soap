@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://com/ilyachuvaev/webservices/contactservice"
+            xmlns:contact="http://webservices.ilyachuvaev.com"
+            targetNamespace="http://com/ilyachuvaev/webservices/contactservice" elementFormDefault="qualified">
+    <xsd:import namespace="http://webservices.ilyachuvaev.com" schemaLocation="ContactDetails.xsd"/>
+    <xsd:element name="ContactDetailsRequest">
+        <xsd:complexType>
+            <xsd:seguence>
+                <xsd:element name="id" type="xsd:long"/>
+                <xsd:element name="firstName" type="xsd:string"/>
+                <xsd:element name="lastName" type="xsd:string"/>
+                <xsd:element name="phone" type="xsd:string"/>
+                <xsd:element name="email" type="xsd:string"/>
+            </xsd:seguence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="ContactDetailsResponse">
+        <xsd:complexType>
+            <xsd:seguence>
+                <xsd:element name="ContactDetails" type="contact:Contact"/>
+            </xsd:seguence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
