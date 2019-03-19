@@ -4,18 +4,22 @@ import com.ilyachuvaev.exception.ContactNotFoundException;
 import com.ilyachuvaev.repository.ContactRepository;
 import com.ilyachuvaev.webservices.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
+
+import javax.jws.WebMethod;
+import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.jws.WebService;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@WebService(serviceName = "ContactService", portName = "ContactServicePort", targetNamespace = "http://webservices.ilyachuvaev.com")
+@SOAPBinding(style = SOAPBinding.Style.DOCUMENT, use = SOAPBinding.Use.LITERAL, parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
 public class ContactServiceImpl implements ContactService{
 
     private ContactRepository contactRepository;
@@ -27,12 +31,14 @@ public class ContactServiceImpl implements ContactService{
         this.contactRepository = contactRepository;
     }
 
+    @WebMethod
     public Contact getContactDetails(Long id){
         Optional<Contact> contact = contactRepository.findById(id);
         return contact.orElseThrow(() -> new ContactNotFoundException("Contact with id = " + id + " not found)"));
 
     }
 
+    @WebMethod
     public long saveOrUpdate(Contact contact){
         if (contact != null){
             contactRepository.save(contact);
@@ -42,6 +48,7 @@ public class ContactServiceImpl implements ContactService{
         return contact.getId();
     }
 
+    @WebMethod
     public long  delete(Long id){
         Optional<Contact> contact = contactRepository.findById(id);
         contact.ifPresentOrElse(
@@ -51,6 +58,7 @@ public class ContactServiceImpl implements ContactService{
         return id;
     }
 
+    @WebMethod
     public List<Contact> getContacts(){
         ArrayList<Contact> contacts = new ArrayList<>(size);
         contacts.addAll(getAllContacts());
