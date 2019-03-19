@@ -118,7 +118,6 @@
       <artifactId>jaxb-api</artifactId>
       <version>2.3.1</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-codegen-plugin -->
     <dependency>
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-codegen-plugin</artifactId>
@@ -139,27 +138,6 @@
             <target>9</target>
           </configuration>
         </plugin>
-        <!--<plugin>-->
-          <!--<groupId>org.codehaus.mojo</groupId>-->
-          <!--<artifactId>jaxb2-maven-plugin</artifactId>-->
-          <!--<version>${jaxb2.plugin.version}</version>-->
-          <!--<executions>-->
-            <!--<execution>-->
-                <!--<id>xjc</id>-->
-               <!--<goals>-->
-                  <!--<goal>xjc</goal>-->
-               <!--</goals>-->
-            <!--</execution>-->
-          <!--</executions>-->
-          <!--<configuration>-->
-            <!--<clearOutputDir>true</clearOutputDir>-->
-            <!--<outputDirectory>com.ilyachuvaev/src/main/java</outputDirectory>-->
-            <!--<schemaDirectory>com.ilyachuvaev/src/main/webapp/schemas</schemaDirectory>-->
-            <!--<includeSchemasOutputPath>**/*.xsd</includeSchemasOutputPath>-->
-            <!--<bindingDirectory>com.ilyachuvaev/src/main/resources/bindings</bindingDirectory>-->
-            <!--<enableIntrospection>false</enableIntrospection>-->
-          <!--</configuration>-->
-        <!--</plugin>-->
         <plugin>
           <groupId>org.apache.cxf</groupId>
           <artifactId>cxf-codegen-plugin</artifactId>

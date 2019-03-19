@@ -14,6 +14,7 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+
 @Endpoint
 @Controller
 public class ContactServiceEndpoint {
@@ -59,4 +60,5 @@ public class ContactServiceEndpoint {
         contactService.delete(contactId);
         return contactId;
     }
+
 }

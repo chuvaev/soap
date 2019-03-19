@@ -6,8 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class InicializationApp {
 
-    @Autowired
     private ContactRepository contactRepository;
+
+    @Autowired
+    public void setContactRepository(ContactRepository contactRepository) {
+        this.contactRepository = contactRepository;
+    }
 
     void init(){
         contactRepository.save(new Contact(1L, "Jaon", "Jonson", "+74951512365", "jony@jon.com"));
