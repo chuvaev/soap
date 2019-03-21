@@ -181,7 +181,7 @@
                   </sources>
 
                   <packageName>com.ilyachuvaev.webservices</packageName>
-                  <clearOutputDir>true</clearOutputDir>
+                  <clearOutputDir>false</clearOutputDir>
               </configuration>
           </plugin>
           <plugin>
