@@ -17,7 +17,7 @@
 
     <wsdl:types>
         <s:import namespace="http://com/ilyachuvaev/webservices/contactservice"
-                  schemaLocation="ContactService.wsdl">
+                  schemaLocation="contacts.wsdl">
         </s:import>
     </wsdl:types>
 
