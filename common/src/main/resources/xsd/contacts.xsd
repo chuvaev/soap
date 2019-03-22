@@ -6,17 +6,17 @@
            elementFormDefault="qualified" attributeFormDefault="unqualified">
     <xs:element name="getContactRequest">
         <xs:complexType>
-            <xs:seguence>
+            <xs:all>
                 <xs:element name="name" type="xs:string"/>
-            </xs:seguence>
+            </xs:all>
         </xs:complexType>
     </xs:element>
 
     <xs:element name="getContactResponse">
         <xs:complexType>
-            <xs:seguence>
+            <xs:all>
                 <xs:element name="contact" type="tns:contact"/>
-            </xs:seguence>
+            </xs:all>
         </xs:complexType>
     </xs:element>
 
