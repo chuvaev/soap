@@ -1,15 +1,14 @@
 package com.ilyachuvaev;
 
-import com.ilyachuvaev.services.ContactServiceImpl;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import javax.xml.ws.Endpoint;
 
+@SpringBootApplication
 public class SoapApplication {
 
     public static void main(String[] args){
-
-        Endpoint.publish("http://localhost:8080/webservices",
-                new ContactServiceImpl());
+        SpringApplication.run(SoapApplication.class,args);
 
         InicializationApp inicializationApp = new InicializationApp();
         inicializationApp.init();

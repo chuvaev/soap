@@ -1,6 +1,6 @@
 package com.ilyachuvaev.services;
 
-import com.ilyachuvaev.webservices.Contact;
+import com.ilyachuvaev.entity.Contact;
 
 import java.util.List;
 

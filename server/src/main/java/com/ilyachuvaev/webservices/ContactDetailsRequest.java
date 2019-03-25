@@ -1,6 +1,6 @@
-package com.ilyachuvaev.webservices.contactservice;
+package com.ilyachuvaev.webservices;
 
-import com.ilyachuvaev.webservices.Contact;
+import com.ilyachuvaev.entity.Contact;
 
 import javax.xml.bind.annotation.*;
 

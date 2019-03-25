@@ -1,14 +1,16 @@
-package com.ilyachuvaev.webservices;
+package com.ilyachuvaev.entity;
 
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
 @Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)

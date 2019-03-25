@@ -19,21 +19,6 @@
     </bean>
     <bean id="marshaller" class="org.springframework.oxm.xmlbeans.XmlBeansMarshaller"/>
 
-    <bean id="ContactDetailsService" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition" lazy-init="true">
-        <property name="schemaCollection">
-            <bean class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
-                <property name="inline" value="true"/>
-                <property name="xsdS">
-                    <list>
-                        <value>schemas/ContactDetailsServiceOperations.xsd</value>
-                    </list>
-                </property>
-            </bean>
-        </property>
-        <property name="portTypeName" value="ContactDetailsService"/>
-        <property name="serviceName" value="ContactDetailsServices"/>
-        <property name="locationUri" value="/endpoints"/>
-    </bean>
     <sws:dynamic-wsdl id="ContactService" portTypeName="services" locationUri="/ContactService">
         <sws:xsd location="/webapp/schemas/ContactDetails.xsd"/>
     </sws:dynamic-wsdl>

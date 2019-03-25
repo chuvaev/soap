@@ -28,11 +28,6 @@
             <artifactId>jaxb-api</artifactId>
             <version>${jaxbapi.version}</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.codehaus.mojo</groupId>-->
-            <!--<artifactId>jaxb2-maven-plugin</artifactId>-->
-            <!--<version>${jaxb2.plugin.version}</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.apache.ws.commons.schema</groupId>
             <artifactId>XmlSchema</artifactId>
@@ -64,121 +59,38 @@
                 <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-xjc-plugin</artifactId>
-                <version>3.3.0</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
+                <version>${jaxb2.plugin.version}</version>
                 <executions>
                     <execution>
                         <id>xjc</id>
-                        <phase>generate-sources</phase>
                         <goals>
-                            <goal>xsdtojava</goal>
+                            <goal>xjc</goal>
                         </goals>
-                        <configuration>
-                            <xsdOptions>
-                                <xsdOption>
-                                    <xsd>${basedir}/src/main/resources/xsd/schema.xsd</xsd>
-                                    <packagename>${basedir}/java/com.ilyachuvaev</packagename>
-                                    <wsdl>true</wsdl>
-                                </xsdOption>
-                            </xsdOptions>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <sources>
+                        <source>src/main/resources/xsd/dummy.xsd</source>
+                        <source>src/main/resources/xsd/schema.wsdl</source>
+                    </sources>
+                    <packageName>com.ilyachuvaev</packageName>
+                    <arguments>-wsdl</arguments>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.glassfish.jaxb</groupId>
+                        <artifactId>jaxb-xjc</artifactId>
+                        <version>2.3.2</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.sun.activation</groupId>
+                        <artifactId>jakarta.activation</artifactId>
+                        <version>1.2.1</version>
+                    </dependency>
+                </dependencies>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.codehaus.mojo</groupId>-->
-                <!--<artifactId>jaxb2-maven-plugin</artifactId>-->
-                <!--<version>${jaxb2.plugin.version}</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>xjc</id>-->
-                        <!--<goals>-->
-                            <!--<goal>xjc</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--<configuration>-->
-                    <!--<sources>-->
-                        <!--<source>src/main/resources/xsd/dummy.xsd</source>-->
-                        <!--<source>src/main/resources/xsd/schema.xsd</source>-->
-                        <!--<source>src/main/resources/xsd/contacts.xsd</source>-->
-                    <!--</sources>-->
-                    <!--<packageName>com.ilyachuvaev</packageName>-->
-                <!--</configuration>-->
-                <!--<dependencies>-->
-                    <!--<dependency>-->
-                        <!--<groupId>org.glassfish.jaxb</groupId>-->
-                        <!--<artifactId>jaxb-xjc</artifactId>-->
-                        <!--<version>2.3.2</version>-->
-                    <!--</dependency>-->
-                    <!--<dependency>-->
-                        <!--<groupId>com.sun.activation</groupId>-->
-                        <!--<artifactId>jakarta.activation</artifactId>-->
-                        <!--<version>1.2.1</version>-->
-                    <!--</dependency>-->
-                <!--</dependencies>-->
-            <!--</plugin>-->
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-antrun-plugin</artifactId>-->
-                <!--<version>${ant.plugin}</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<phase>initialize</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>run</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<tasks>-->
-                                <!--<mkdir dir="target/generated-sources"/>-->
-                            <!--</tasks>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
-            <!--<plugin>-->
-                <!--<groupId>org.codehaus.mojo</groupId>-->
-                <!--<artifactId>exec-maven-plugin</artifactId>-->
-                <!--<version>${exec.plugin}</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<phase>generate-sources</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>exec</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--<configuration>-->
-                    <!--<executable>xjc</executable>-->
-                    <!--<arguments>-->
-                        <!--<argument>-p</argument>-->
-                        <!--<argument>${project.basedir}/java/com/ilyachuvaev/</argument>-->
-                        <!--<argument>-d</argument>-->
-                        <!--<argument>target/generated-sources</argument>-->
-                        <!--<argument>src/main/resources/xsd/schema.xsd</argument>-->
-                        <!--<argument>-wsdl</argument>-->
-                    <!--</arguments>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-            <!--<plugin>-->
-                <!--<groupId>org.codehaus.mojo</groupId>-->
-                <!--<artifactId>build-helper-maven-plugin</artifactId>-->
-                <!--<version>${build-helper.plugin}</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<phase>process-sources</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>add-source</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<sources>-->
-                                <!--<source>target/generated-sources</source>-->
-                            <!--</sources>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
         </plugins>
     </build>
 

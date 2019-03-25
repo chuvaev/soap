@@ -2,8 +2,9 @@ package com.ilyachuvaev.services;
 
 import com.ilyachuvaev.exception.ContactNotFoundException;
 import com.ilyachuvaev.repository.ContactRepository;
-import com.ilyachuvaev.webservices.Contact;
+import com.ilyachuvaev.entity.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 
 import javax.jws.WebMethod;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 @WebService(serviceName = "ContactService", portName = "ContactServicePort", targetNamespace = "http://webservices.ilyachuvaev.com")
 @SOAPBinding(style = SOAPBinding.Style.DOCUMENT, use = SOAPBinding.Use.LITERAL, parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
 public class ContactServiceImpl implements ContactService{
