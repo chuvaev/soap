@@ -19,6 +19,7 @@
         <h2.version>1.4.199</h2.version>
         <jax.version>2.3.1</jax.version>
         <jws.version>3.1.2.2</jws.version>
+        <jsp.version>1.2</jsp.version>
     </properties>
 
     <dependencies>
@@ -53,6 +54,17 @@
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp.jstl</groupId>
+            <artifactId>jstl-api</artifactId>
+            <version>${jsp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ilyachuvaev</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
     <build>

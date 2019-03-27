@@ -1,8 +1,8 @@
 package com.ilyachuvaev.services;
 
+import com.ilyachuvaev.Contact;
 import com.ilyachuvaev.exception.ContactNotFoundException;
 import com.ilyachuvaev.repository.ContactRepository;
-import com.ilyachuvaev.entity.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.jws.WebService;
 import java.io.File;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,13 +62,14 @@ public class ContactServiceImpl implements ContactService{
 
     @WebMethod
     public List<Contact> getContacts(){
-        ArrayList<Contact> contacts = new ArrayList<>(size);
+        LinkedList<Contact> contacts = new LinkedList<>();
         contacts.addAll(getAllContacts());
         return contacts;
     }
 
     public List<Contact> getAllContacts(){return (List<Contact>) contactRepository.findAll();}
 
+    @WebMethod
     public Contact fromXmlToObject(String filePath){
         try{
             JAXBContext jaxbContext = JAXBContext.newInstance(Contact.class);
@@ -80,6 +81,7 @@ public class ContactServiceImpl implements ContactService{
         return null;
     }
 
+    @WebMethod
     public void convertObjectToXml(Contact contact, String filePath){
         try{
             JAXBContext context = JAXBContext.newInstance(Contact.class);

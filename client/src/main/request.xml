@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:gs="http://ilyachuvaev.com/services/soapservice"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://ilyachuvaev.com/services/soapservice ">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <gs:getContact>contact</gs:getContact>
+    </soapenv:Body>
+</soapenv:Envelope>

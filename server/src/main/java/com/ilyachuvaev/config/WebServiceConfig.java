@@ -1,23 +1,22 @@
 package com.ilyachuvaev.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.jdbc.datasource.init.DataSourceInitializer;
-import org.springframework.jdbc.datasource.init.DatabasePopulator;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.ws.config.annotation.EnableWs;
-import org.springframework.ws.config.annotation.WsConfigurerAdapter;
 import org.springframework.ws.transport.http.MessageDispatcherServlet;
 import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
@@ -25,29 +24,34 @@ import org.springframework.xml.xsd.XsdSchema;
 
 import java.util.Properties;
 
-@EnableWs
 @Configuration
+@PropertySource(value = "classpath: application.properties")
+@EnableWs
 @ComponentScan(basePackages = "com.ilyachuvaev")
-public class WebServiceConfig extends WsConfigurerAdapter {
+public class WebServiceConfig implements WebMvcConfigurer {
 
+    @Bean
+    public InternalResourceViewResolver jspViewResolver(){
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setOrder(1);
+        viewResolver.setPrefix("/resources/view/");
+        viewResolver.setSuffix(".jsp");
+        return viewResolver;
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry){
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry){
+        registry.addViewController("/").setViewName("forward:/index.jsp");
+    }
     @Bean
     public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
     }
-
-    @Value("${driver-class-name")
-    private String driverClass;
-    @Value("${url}")
-    private String jdbcUrl;
-    @Value("${username}")
-    private String jdbcUserName;
-    @Value("${password}")
-    private String jdbcPassword;
-
-    @Value("classpath: dbschema.sql")
-    private Resource dbSchemaSqlScript;
-    @Value("classpath: test-data.sql")
-    private Resource testDataSqlScript;
 
     @Bean
     public ServletRegistrationBean messageDispatcherServlet(ApplicationContext applicationContext){
@@ -75,32 +79,17 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     @Bean(name = "dataSource")
     public DriverManagerDataSource getDriverManagerDataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(driverClass);
-        dataSource.setUrl(jdbcUrl);
-        dataSource.setUsername(jdbcUserName);
-        dataSource.setPassword(jdbcPassword);
+        dataSource.setDriverClassName("driver-class-name");
+        dataSource.setUrl("url");
+        dataSource.setUsername("username");
+        dataSource.setPassword("password");
         return dataSource;
-    }
-
-    @Bean
-    public DataSourceInitializer dataSourceInitializer(){
-        final DataSourceInitializer initializer = new DataSourceInitializer();
-        initializer.setDataSource(getDriverManagerDataSource());
-        initializer.setDatabasePopulator(getDatabasePopulator());
-        return initializer;
-    }
-
-    private DatabasePopulator getDatabasePopulator(){
-        final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.addScript(dbSchemaSqlScript);
-        populator.addScript(testDataSqlScript);
-        return populator;
     }
 
     @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean getLocalContainerEntityManagerFactoryBean(){
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setPackagesToScan(new String[]{"server.com.ilyachuvaev.entity"});
+        em.setPackagesToScan(new String[]{"com.ilyachuvaev"});
         em.setDataSource(getDriverManagerDataSource());
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
