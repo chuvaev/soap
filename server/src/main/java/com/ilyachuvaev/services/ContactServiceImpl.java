@@ -6,15 +6,9 @@ import com.ilyachuvaev.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import javax.jws.WebMethod;
-import javax.jws.soap.SOAPBinding;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.jws.WebService;
-import java.io.File;
+import javax.jws.soap.SOAPBinding;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +20,7 @@ public class ContactServiceImpl implements ContactService{
 
     private ContactRepository contactRepository;
     private final int size = 20;
-    private final String fileName = "C:/contacts.xml";
+
 
     @Autowired
     public void setContactRepository(ContactRepository contactRepository) {
@@ -69,28 +63,6 @@ public class ContactServiceImpl implements ContactService{
 
     public List<Contact> getAllContacts(){return (List<Contact>) contactRepository.findAll();}
 
-    @WebMethod
-    public Contact fromXmlToObject(String filePath){
-        try{
-            JAXBContext jaxbContext = JAXBContext.newInstance(Contact.class);
-            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            return (Contact) unmarshaller.unmarshal(new File(filePath));
-        }catch (JAXBException e){
-            e.printStackTrace();
-        }
-        return null;
-    }
 
-    @WebMethod
-    public void convertObjectToXml(Contact contact, String filePath){
-        try{
-            JAXBContext context = JAXBContext.newInstance(Contact.class);
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            marshaller.marshal(contact,new File(filePath));
-        }catch (JAXBException e){
-            e.printStackTrace();
-        }
-    }
 
 }

@@ -15,7 +15,4 @@ public interface ContactService {
 
     List<Contact> getContacts();
 
-    Contact fromXmlToObject(String filePath);
-
-    void convertObjectToXml(Contact contact, String filePath);
 }
