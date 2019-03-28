@@ -35,6 +35,10 @@ out/*
 .idea/*
 .idea
 *.iml
+<<<<<<< HEAD
+=======
+
+>>>>>>> 583dfa970c59d51305bc2fa7a126c1f7e33f1991
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
