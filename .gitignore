@@ -35,8 +35,6 @@ out/*
 .idea/*
 .idea
 *.iml
-target/
-target
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
