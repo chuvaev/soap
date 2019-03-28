@@ -25,8 +25,8 @@ import java.util.Optional;
 public class ContactServiceImpl implements ContactService{
 
     private ContactRepository contactRepository;
-    private final int size = 20;
-    private final String fileName = "C:/contacts.xml";
+    private final int size = 20;// что за переменная? где используется?
+    private final String fileName = "C:/contacts.xml";//TODO: вынести в property file
 
     @Autowired
     public void setContactRepository(ContactRepository contactRepository) {
@@ -76,7 +76,7 @@ public class ContactServiceImpl implements ContactService{
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             return (Contact) unmarshaller.unmarshal(new File(filePath));
         }catch (JAXBException e){
-            e.printStackTrace();
+            e.printStackTrace();// TODO: нужна правильная обработка исключений
         }
         return null;
     }
@@ -89,7 +89,7 @@ public class ContactServiceImpl implements ContactService{
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(contact,new File(filePath));
         }catch (JAXBException e){
-            e.printStackTrace();
+            e.printStackTrace();// TODO: нужна правильная обработка исключений
         }
     }
 
