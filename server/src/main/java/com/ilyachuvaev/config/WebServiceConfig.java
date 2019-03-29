@@ -22,43 +22,25 @@ import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
 
+import javax.servlet.Servlet;
 import java.util.Properties;
 
 @Configuration
-@PropertySource(value = "classpath: application.properties")
+@PropertySource(value = "classpath:application.properties")
 @EnableWs
 @ComponentScan(basePackages = "com.ilyachuvaev")
 public class WebServiceConfig implements WebMvcConfigurer {
 
-    @Bean
-    public InternalResourceViewResolver jspViewResolver(){
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setOrder(1);
-        viewResolver.setPrefix("/resources/view/");
-        viewResolver.setSuffix(".jsp");
-        return viewResolver;
-    }
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry){
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-    }
-
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry){
-        registry.addViewController("/").setViewName("forward:/index.jsp");
-    }
     @Bean
     public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
     }
 
     @Bean
-    public ServletRegistrationBean messageDispatcherServlet(ApplicationContext applicationContext){
+    public ServletRegistrationBean <Servlet> messageDispatcherServlet(ApplicationContext applicationContext){
         MessageDispatcherServlet servlet = new MessageDispatcherServlet();
         servlet.setApplicationContext(applicationContext);
-        servlet.setTransformWsdlLocations(true);
-        return new ServletRegistrationBean(servlet, "/ws/*");
+        return new ServletRegistrationBean<>(servlet, "/ws/*");
     }
 
     @Bean(name = "contacts")
@@ -66,7 +48,7 @@ public class WebServiceConfig implements WebMvcConfigurer {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("ContactsPort");
         wsdl11Definition.setLocationUri("/ws");
-        wsdl11Definition.setTargetNamespace("http://ilyachuvaev.com/services/soapservice");
+        wsdl11Definition.setTargetNamespace("http://ilyachuvaev.com/soapservice");
         wsdl11Definition.setSchema(contactsSchema);
         return wsdl11Definition;
     }
@@ -106,4 +88,25 @@ public class WebServiceConfig implements WebMvcConfigurer {
 
         return em;
     }
+
+    @Bean
+    public InternalResourceViewResolver jspViewResolver(){
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setOrder(1);
+        viewResolver.setPrefix("/resources/view/");
+        viewResolver.setSuffix(".jsp");
+        return viewResolver;
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry){
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry){
+        registry.addViewController("/").setViewName("forward:/index.jsp");
+    }
+
+
 }

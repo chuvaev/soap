@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<wsdl:definitions name="SoapService" targetNamespace="http://ilyachuvaev.com/services/soapservice"
-                  xmlns:tns="http://ilyachuvaev.com/services/soapservice"
-                  xmlns:types="http://ilyachuvaev.com/services/soapservice" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+<wsdl:definitions name="SoapService" targetNamespace="http://ilyachuvaev.com/soapservice"
+                  xmlns:tns="http://ilyachuvaev.com/soapservice"
+                  xmlns:types="http://ilyachuvaev.com/soapservice" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
                   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <wsdl:types>
-        <xsd:schema targetNamespace="http://ilyachuvaev.com/services/soapservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                    xmlns:tns="http://ilyachuvaev.com/services/soapservice"
+        <xsd:schema targetNamespace="http://ilyachuvaev.com/soapservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                    xmlns:tns="http://ilyachuvaev.com/soapservice"
                     elementFormDefault="qualified" attributeFormDefault="unqualified">
 
             <xsd:element name="contactRequest">
@@ -37,24 +37,24 @@
         </xsd:schema>
     </wsdl:types>
 
-    <wsdl:message name="ContactDetailsRequest">
-        <wsdl:part element="ContactDetailsRequest" name="parameters"/>
+    <wsdl:message name="ContactRequest">
+        <wsdl:part element="contactRequest" name="parameters"/>
     </wsdl:message>
-    <wsdl:message name="ContactDetailsResponse">
-        <wsdl:part element="ContactDetailsResponse" name="parameters"/>
+    <wsdl:message name="ContactResponse">
+        <wsdl:part element="contactResponse" name="parameters"/>
     </wsdl:message>
 
     <wsdl:portType name="Contacts">
-        <wsdl:operation name="GetContact">
-            <wsdl:input message="tns:ContactDetailsRequest"/>
-            <wsdl:output message="tns:ContactDetailsResponse"/>
+        <wsdl:operation name="getContactDetails">
+            <wsdl:input message="tns:ContactRequest"/>
+            <wsdl:output message="tns:ContactResponse"/>
         </wsdl:operation>
     </wsdl:portType>
 
     <wsdl:binding name="ContactServiceSoapBinding" type="Contacts">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <wsdl:operation name="GetContact">
-            <soap:operation soapAction="http://www.ilyachuvaev.com/Contacts/GetContact"/>
+        <wsdl:operation name="getContactDetails">
+            <soap:operation soapAction="http://www.ilyachuvaev.com/services/getContactDetails"/>
             <wsdl:input>
                 <soap:body use="literal"/>
             </wsdl:input>
@@ -66,7 +66,7 @@
 
     <wsdl:service name="ContactService">
         <wsdl:port binding="tns:ContactServiceSoapBinding" name="ContactsPort">
-            <soap:address location="http://localhost:8080/services/contacts"/>
+            <soap:address location="http://localhost:8080/soapservice/ws"/>
         </wsdl:port>
     </wsdl:service>
 
