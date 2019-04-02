@@ -36,6 +36,7 @@
     <spring-boot-starter.version>2.1.3.RELEASE</spring-boot-starter.version>
     <spring-oxm.version>5.1.5.RELEASE</spring-oxm.version>
     <spring-ws-core.version>3.0.7.RELEASE</spring-ws-core.version>
+    <tomcat.version>9.0.17</tomcat.version>
 
     <maven.clean.plugin>3.1.0</maven.clean.plugin>
     <maven.resource.plugin>3.0.2</maven.resource.plugin>
@@ -90,6 +91,7 @@
   </dependencyManagement>
 
   <dependencies>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
@@ -104,6 +106,11 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-oxm</artifactId>
       <version>${spring-oxm.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-catalina</artifactId>
+      <version>${tomcat.version}</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

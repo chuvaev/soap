@@ -28,7 +28,7 @@ import java.util.Properties;
 @Configuration
 @PropertySource(value = "classpath:application.properties")
 @EnableWs
-@ComponentScan(basePackages = "com.ilyachuvaev")
+@ComponentScan(basePackages = "**.com.ilyachuvaev")
 public class WebServiceConfig implements WebMvcConfigurer {
 
     @Bean
