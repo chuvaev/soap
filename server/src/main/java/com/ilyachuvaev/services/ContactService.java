@@ -13,6 +13,4 @@ public interface ContactService {
 
     long delete(Long id);
 
-    List<Contact> getContacts();
-
 }

@@ -9,12 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.jws.WebMethod;
 import javax.jws.soap.SOAPBinding;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.jws.WebService;
-import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;

@@ -8,10 +8,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.jdbc.datasource.init.DataSourceInitializer;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -26,11 +29,14 @@ import javax.servlet.Servlet;
 import java.util.Properties;
 
 @Configuration
+@EnableTransactionManagement
+@EnableJpaRepositories(basePackages = "com.ilyachuvaev.repository")
 @PropertySource(value = "classpath:application.properties")
 @EnableWs
-@ComponentScan(basePackages = "**.com.ilyachuvaev")
+@ComponentScan(basePackages = "com.ilyachuvaev")
 public class WebServiceConfig implements WebMvcConfigurer {
 
+    private String[] packageToScan = {"com.ilyachuvaev.entity"};
     @Bean
     public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
@@ -40,7 +46,7 @@ public class WebServiceConfig implements WebMvcConfigurer {
     public ServletRegistrationBean <Servlet> messageDispatcherServlet(ApplicationContext applicationContext){
         MessageDispatcherServlet servlet = new MessageDispatcherServlet();
         servlet.setApplicationContext(applicationContext);
-        return new ServletRegistrationBean<>(servlet, "/ws/*");
+        return new ServletRegistrationBean<>(servlet, "/soapservice/ws");
     }
 
     @Bean(name = "contacts")
@@ -55,7 +61,7 @@ public class WebServiceConfig implements WebMvcConfigurer {
 
     @Bean
     public XsdSchema contactsSchema(){
-        return new SimpleXsdSchema(new ClassPathResource("schema.wsdl"));
+        return new SimpleXsdSchema(new ClassPathResource("contacts.wsdl"));
     }
 
     @Bean(name = "dataSource")
@@ -68,15 +74,22 @@ public class WebServiceConfig implements WebMvcConfigurer {
         return dataSource;
     }
 
+    @Bean
+    public DataSourceInitializer dataSourceInitializer(){
+        final DataSourceInitializer initializer = new DataSourceInitializer();
+        initializer.setDataSource(getDriverManagerDataSource());
+        return initializer;
+    }
+
     @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean getLocalContainerEntityManagerFactoryBean(){
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setPackagesToScan(new String[]{"com.ilyachuvaev"});
+        em.setPackagesToScan(packageToScan);
         em.setDataSource(getDriverManagerDataSource());
 
-        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        ((HibernateJpaVendorAdapter) vendorAdapter).setGenerateDdl(true);
-        ((HibernateJpaVendorAdapter) vendorAdapter).setShowSql(true);
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        vendorAdapter.setGenerateDdl(true);
+        vendorAdapter.setShowSql(true);
         em.setJpaVendorAdapter(vendorAdapter);
 
         Properties jpaProperties = new Properties();
@@ -84,9 +97,18 @@ public class WebServiceConfig implements WebMvcConfigurer {
         jpaProperties.put("hibernate.show_sql", true);
         jpaProperties.put("hibernate.format_sql", "false");
         jpaProperties.put("hibernate.html2ddl.auto", "none");
+        jpaProperties.put("hibernate.ddl-auto","update");
         em.setJpaProperties(jpaProperties);
 
         return em;
+    }
+
+    @Bean
+    public JpaTransactionManager transactionManager() {
+        JpaTransactionManager txManager = new JpaTransactionManager();
+        txManager.setDataSource(getDriverManagerDataSource());
+        txManager.setEntityManagerFactory(getLocalContainerEntityManagerFactoryBean().getObject());
+        return txManager;
     }
 
     @Bean

@@ -9,7 +9,6 @@ import org.springframework.ws.client.core.WebServiceTemplate;
 @Component
 public class SoapClient {
     // http://localhost:8080/ws/contacts.wsdl
-    // http://programming-lang.com/ru/comp_programming/troelsen/0/j2166.html
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SoapClient.class);
     private WebServiceTemplate webServiceTemplate;
@@ -28,6 +27,20 @@ public class SoapClient {
         ContactResponse response = (ContactResponse) webServiceTemplate.marshalSendAndReceive(contact);
 
         return response;
+    }
+
+    public PostResponse addContact(Contact contact){
+        ObjectFactory factory = new ObjectFactory();
+        Contact contact1 = factory.createContact();
+        contact1.setId(contact.getId());
+        contact1.setFirstName(contact.getFirstName());
+        contact1.setLastName(contact.getLastName());
+        contact1.setEmail(contact.getEmail());
+        contact1.setPhone(contact.getPhone());
+
+        LOGGER.info("Client adding contact[id={}]", contact1.getId());
+        PostResponse postResponse = (PostResponse) webServiceTemplate.marshalSendAndReceive(contact1);
+        return postResponse;
     }
 
 }
