@@ -1,6 +1,6 @@
 # Compiled class file
 *.class
-
+!/target/generated-sources/jaxb/com/ilyachuvaev/
 # Log file
 *.log
 
