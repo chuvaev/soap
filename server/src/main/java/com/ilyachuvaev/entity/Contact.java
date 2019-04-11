@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -19,6 +20,7 @@ import java.io.Serializable;
 @XmlType(name = "contact", propOrder = {"id", "firstName", "lastName", "phone", "email"})
 public class Contact implements Serializable {
 
+    @Id
     @XmlElement(name = "id", required = true)
     private Long id;
     @XmlElement(name = "firstName", required = true)

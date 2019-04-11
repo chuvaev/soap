@@ -54,6 +54,14 @@ public class InicializationApp {
         contact4.setEmail("ruby@ruby.com");
         repository.save(contact4);
 
+        Contact contact5 = new Contact();
+        contact4.setId(6L);
+        contact4.setFirstName("Tair");
+        contact4.setLastName("Polish");
+        contact4.setPhone("+76523265984");
+        contact4.setEmail("tair@pol.com");
+        repository.save(contact5);
+
     }
 
     InicializationApp(){}

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.jws.WebMethod;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.WebService;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class ContactServiceImpl implements ContactService{
 
     private ContactRepository contactRepository;
+    private int size = 2;
 
     @Autowired
     public void setContactRepository(ContactRepository contactRepository) {
@@ -55,12 +57,20 @@ public class ContactServiceImpl implements ContactService{
 
     @WebMethod
     public List<Contact> getContacts(){
-        LinkedList<Contact> contacts = new LinkedList<>();
-        contacts.addAll(getAllContacts());
-        return contacts;
+        List<Contact> contacts = getAllContacts();
+        LinkedList<Contact> contactsList = new LinkedList<>();
+        Iterator<Contact> iterator = contacts.iterator();
+        int point = 0;
+        while (iterator.hasNext() && point <= size){
+            Contact i = iterator.next();
+            contacts.add(i);
+            point++;
+        }
+        return contactsList;
     }
 
     public List<Contact> getAllContacts(){return (List<Contact>) contactRepository.findAll();}
+
 
 
 }

@@ -1,5 +1,7 @@
 package com.ilyachuvaev.config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -29,14 +31,15 @@ import javax.servlet.Servlet;
 import java.util.Properties;
 
 @Configuration
-@EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "com.ilyachuvaev.repository")
+@EnableTransactionManagement(proxyTargetClass = true)
 @PropertySource(value = "classpath:application.properties")
+@EnableJpaRepositories(basePackages = {"com.ilyachuvaev.entity"}, entityManagerFactoryRef = "entityManagerFactory", transactionManagerRef = "transactionManager")
 @EnableWs
-@ComponentScan(basePackages = "com.ilyachuvaev")
+@ComponentScan(basePackages = "com.ilyachuvaev.services")
 public class WebServiceConfig implements WebMvcConfigurer {
 
     private String[] packageToScan = {"com.ilyachuvaev.entity"};
+
     @Bean
     public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
@@ -64,13 +67,13 @@ public class WebServiceConfig implements WebMvcConfigurer {
         return new SimpleXsdSchema(new ClassPathResource("contacts.wsdl"));
     }
 
-    @Bean(name = "dataSource")
+    @Bean(name="datasource")
     public DriverManagerDataSource getDriverManagerDataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("driver-class-name");
-        dataSource.setUrl("url");
-        dataSource.setUsername("username");
-        dataSource.setPassword("password");
+        dataSource.setDriverClassName("org.h2.Driver");
+        dataSource.setUrl("jdbc:h2:~/spring.h2");
+        dataSource.setUsername("sa");
+        dataSource.setPassword("");
         return dataSource;
     }
 
@@ -96,18 +99,17 @@ public class WebServiceConfig implements WebMvcConfigurer {
         jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
         jpaProperties.put("hibernate.show_sql", true);
         jpaProperties.put("hibernate.format_sql", "false");
-        jpaProperties.put("hibernate.html2ddl.auto", "none");
         jpaProperties.put("hibernate.ddl-auto","update");
         em.setJpaProperties(jpaProperties);
 
         return em;
     }
 
-    @Bean
+    @Bean(name = "transactionManager")
     public JpaTransactionManager transactionManager() {
         JpaTransactionManager txManager = new JpaTransactionManager();
         txManager.setDataSource(getDriverManagerDataSource());
-        txManager.setEntityManagerFactory(getLocalContainerEntityManagerFactoryBean().getObject());
+        txManager.setEntityManagerFactory(getLocalContainerEntityManagerFactoryBean().getNativeEntityManagerFactory());
         return txManager;
     }
 

@@ -2,11 +2,13 @@ package com.ilyachuvaev;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.WebServiceTemplate;
 
 
 @Configuration
+@PropertySource("classpath:client.properties")
 public class ClientConfig {
 
     @Bean
