@@ -1,7 +1,6 @@
 package com.ilyachuvaev.config;
 
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +15,6 @@ import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -31,14 +29,11 @@ import javax.servlet.Servlet;
 import java.util.Properties;
 
 @Configuration
-@EnableTransactionManagement(proxyTargetClass = true)
 @PropertySource(value = "classpath:application.properties")
-@EnableJpaRepositories(basePackages = {"com.ilyachuvaev.entity"}, entityManagerFactoryRef = "entityManagerFactory", transactionManagerRef = "transactionManager")
+@EnableJpaRepositories(basePackages = "com.ilyachuvaev.repository")
 @EnableWs
-@ComponentScan(basePackages = "com.ilyachuvaev.services")
+@ComponentScan(basePackages = "com.ilyachuvaev")
 public class WebServiceConfig implements WebMvcConfigurer {
-
-    private String[] packageToScan = {"com.ilyachuvaev.entity"};
 
     @Bean
     public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
@@ -87,7 +82,7 @@ public class WebServiceConfig implements WebMvcConfigurer {
     @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean getLocalContainerEntityManagerFactoryBean(){
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setPackagesToScan(packageToScan);
+        em.setPackagesToScan(new String[]{"common.com.ilyachuvaev"});
         em.setDataSource(getDriverManagerDataSource());
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
@@ -100,13 +95,14 @@ public class WebServiceConfig implements WebMvcConfigurer {
         jpaProperties.put("hibernate.show_sql", true);
         jpaProperties.put("hibernate.format_sql", "false");
         jpaProperties.put("hibernate.ddl-auto","update");
+        jpaProperties.put("hibernate.html2ddl.auto","none");
         em.setJpaProperties(jpaProperties);
 
         return em;
     }
 
-    @Bean(name = "transactionManager")
-    public JpaTransactionManager transactionManager() {
+    @Bean(name = "jpaTransactionManager")
+    public JpaTransactionManager getJpaTransactionManager() {
         JpaTransactionManager txManager = new JpaTransactionManager();
         txManager.setDataSource(getDriverManagerDataSource());
         txManager.setEntityManagerFactory(getLocalContainerEntityManagerFactoryBean().getNativeEntityManagerFactory());

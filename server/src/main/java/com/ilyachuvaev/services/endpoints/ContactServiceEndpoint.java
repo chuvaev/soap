@@ -15,7 +15,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 @Endpoint
 public class ContactServiceEndpoint {
 
-    private static final String TARGET_NAMESPACE = "http://ilyachuvaev.com/soapservice";
+    private static final String TARGET_NAMESPACE = "http://ilyachuvaev.com/soapservice/ws";
 
     private ContactServiceImpl contactService;
 

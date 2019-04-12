@@ -23,7 +23,7 @@ public class ClientConfig {
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
         webServiceTemplate.setMarshaller(jaxb2Marshaller());
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller());
-        webServiceTemplate.setDefaultUri("http://localhost:8080/ws/contacts");
+        webServiceTemplate.setDefaultUri("http://localhost:8080/soapservice/ws");
         return webServiceTemplate;
     }
 }
