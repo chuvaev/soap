@@ -79,7 +79,9 @@ public class WebServiceConfig implements WebMvcConfigurer {
         return initializer;
     }
 
-    @Bean(name = "entityManagerFactory")
+    @Bean(name = "entityManagerFactory")// Почему в классе Web...Config объявляется бин про JPA ? 
+    //Какое он имеет отношение к web? Тебе нужно освежить знания про SOLID
+    // Используя такой мощный фрэймворк как Spring Boot, зачем обявлять такой специфичный бин? 
     public LocalContainerEntityManagerFactoryBean getLocalContainerEntityManagerFactoryBean(){
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setPackagesToScan(new String[]{"common.com.ilyachuvaev"});
