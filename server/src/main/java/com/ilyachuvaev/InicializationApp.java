@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct;
 public class InicializationApp {
 
     @PostConstruct
-    void init(){
+    public void init(){
         ConfigurableApplicationContext context = SpringApplication.run(SoapApplication.class);
         ContactRepository repository = context.getBean(ContactRepository.class);
         Contact contact = new Contact();

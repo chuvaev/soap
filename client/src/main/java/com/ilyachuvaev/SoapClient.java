@@ -8,7 +8,7 @@ import org.springframework.ws.client.core.WebServiceTemplate;
 
 @Component
 public class SoapClient {
-    // http://localhost:8080/ws/contacts.wsdl
+    // http://localhost:8080/soapservice/ws/contacts.wsdl
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SoapClient.class);
     private WebServiceTemplate webServiceTemplate;
@@ -18,12 +18,12 @@ public class SoapClient {
         this.webServiceTemplate = webServiceTemplate;
     }
 
-    public ContactResponse getContactDetails(String firstName){
+    public ContactResponse getContactDetails(Long id){
         ObjectFactory factory = new ObjectFactory();
         Contact contact = factory.createContact();
-        contact.setFirstName(firstName);
+        contact.setId(id);
 
-        LOGGER.info("Client sending contact[firstName={}]", contact.getFirstName());
+        LOGGER.info("Client sending Contact[firstName={}]", contact.getFirstName());
         ContactResponse response = (ContactResponse) webServiceTemplate.marshalSendAndReceive(contact);
 
         return response;
@@ -38,7 +38,7 @@ public class SoapClient {
         contact1.setEmail(contact.getEmail());
         contact1.setPhone(contact.getPhone());
 
-        LOGGER.info("Client adding contact[id={}]", contact1.getId());
+        LOGGER.info("Client adding Contact[id={}]", contact1.getId());
         PostResponse postResponse = (PostResponse) webServiceTemplate.marshalSendAndReceive(contact1);
         return postResponse;
     }

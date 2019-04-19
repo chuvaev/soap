@@ -4,6 +4,8 @@
                   xsi:schemaLocation="http://ilyachuvaev.com/soapservice ">
     <soapenv:Header/>
     <soapenv:Body>
-        <gs:getContactDetails>contact</gs:getContactDetails>
+        <gs:getContactDetails>
+            <gs:id>1</gs:id>
+        </gs:getContactDetails>
     </soapenv:Body>
 </soapenv:Envelope>

@@ -1,36 +1,23 @@
 package com.ilyachuvaev.config;
 
-
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.jdbc.datasource.init.DataSourceInitializer;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.ws.config.annotation.EnableWs;
-import org.springframework.ws.transport.http.MessageDispatcherServlet;
 import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
 
-import javax.servlet.Servlet;
-import java.util.Properties;
 
 @Configuration
 @PropertySource(value = "classpath:application.properties")
-@EnableJpaRepositories(basePackages = "com.ilyachuvaev.repository")
 @EnableWs
 @ComponentScan(basePackages = "com.ilyachuvaev")
 public class WebServiceConfig implements WebMvcConfigurer {
@@ -40,14 +27,8 @@ public class WebServiceConfig implements WebMvcConfigurer {
         return new PropertySourcesPlaceholderConfigurer();
     }
 
-    @Bean
-    public ServletRegistrationBean <Servlet> messageDispatcherServlet(ApplicationContext applicationContext){
-        MessageDispatcherServlet servlet = new MessageDispatcherServlet();
-        servlet.setApplicationContext(applicationContext);
-        return new ServletRegistrationBean<>(servlet, "/soapservice/ws");
-    }
 
-    @Bean(name = "contacts")
+    @Bean(name = "Contacts")
     public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema contactsSchema){
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("ContactsPort");
@@ -62,54 +43,6 @@ public class WebServiceConfig implements WebMvcConfigurer {
         return new SimpleXsdSchema(new ClassPathResource("contacts.wsdl"));
     }
 
-    @Bean(name="datasource")
-    public DriverManagerDataSource getDriverManagerDataSource(){
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.h2.Driver");
-        dataSource.setUrl("jdbc:h2:~/spring.h2");
-        dataSource.setUsername("sa");
-        dataSource.setPassword("");
-        return dataSource;
-    }
-
-    @Bean
-    public DataSourceInitializer dataSourceInitializer(){
-        final DataSourceInitializer initializer = new DataSourceInitializer();
-        initializer.setDataSource(getDriverManagerDataSource());
-        return initializer;
-    }
-
-    @Bean(name = "entityManagerFactory")// Почему в классе Web...Config объявляется бин про JPA ? 
-    //Какое он имеет отношение к web? Тебе нужно освежить знания про SOLID
-    // Используя такой мощный фрэймворк как Spring Boot, зачем обявлять такой специфичный бин? 
-    public LocalContainerEntityManagerFactoryBean getLocalContainerEntityManagerFactoryBean(){
-        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setPackagesToScan(new String[]{"common.com.ilyachuvaev"});
-        em.setDataSource(getDriverManagerDataSource());
-
-        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(true);
-        vendorAdapter.setShowSql(true);
-        em.setJpaVendorAdapter(vendorAdapter);
-
-        Properties jpaProperties = new Properties();
-        jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
-        jpaProperties.put("hibernate.show_sql", true);
-        jpaProperties.put("hibernate.format_sql", "false");
-        jpaProperties.put("hibernate.ddl-auto","update");
-        jpaProperties.put("hibernate.html2ddl.auto","none");
-        em.setJpaProperties(jpaProperties);
-
-        return em;
-    }
-
-    @Bean(name = "jpaTransactionManager")
-    public JpaTransactionManager getJpaTransactionManager() {
-        JpaTransactionManager txManager = new JpaTransactionManager();
-        txManager.setDataSource(getDriverManagerDataSource());
-        txManager.setEntityManagerFactory(getLocalContainerEntityManagerFactoryBean().getNativeEntityManagerFactory());
-        return txManager;
-    }
 
     @Bean
     public InternalResourceViewResolver jspViewResolver(){
@@ -129,6 +62,5 @@ public class WebServiceConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry){
         registry.addViewController("/").setViewName("forward:/index.jsp");
     }
-
 
 }

@@ -31,7 +31,7 @@ public class ContactServiceImpl implements ContactService{
     @WebMethod
     public Contact getContactDetails(Long id){
         Optional<Contact> contact = contactRepository.findById(id);
-        return contact.orElseThrow(() -> new ContactNotFoundException("Contact with id = " + id + " not found)"));
+        return contact.orElseThrow(() -> new ContactNotFoundException("XmlContact with id = " + id + " not found)"));
 
     }
 
@@ -40,7 +40,7 @@ public class ContactServiceImpl implements ContactService{
         if (contact != null){
             contactRepository.save(contact);
         }else {
-            throw new ContactNotFoundException("Contact not found)");
+            throw new ContactNotFoundException("XmlContact not found)");
         }
         return contact.getId();
     }
@@ -50,7 +50,7 @@ public class ContactServiceImpl implements ContactService{
         Optional<Contact> contact = contactRepository.findById(id);
         contact.ifPresentOrElse(
                 v -> contactRepository.deleteById(id),
-                () -> new ContactNotFoundException("Contact with id = " + id + " not found")
+                () -> new ContactNotFoundException("XmlContact with id = " + id + " not found")
         );
         return id;
     }

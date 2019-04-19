@@ -1,9 +1,6 @@
 package com.ilyachuvaev.services;
 
-
 import com.ilyachuvaev.Contact;
-
-import java.util.List;
 
 public interface ContactService {
 
