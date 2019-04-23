@@ -1,5 +1,7 @@
 package com.ilyachuvaev.config;
 
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -8,9 +10,10 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.ws.config.annotation.EnableWs;
+import org.springframework.ws.config.annotation.WsConfigurerAdapter;
+import org.springframework.ws.transport.http.MessageDispatcherServlet;
 import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
@@ -20,15 +23,22 @@ import org.springframework.xml.xsd.XsdSchema;
 @PropertySource(value = "classpath:application.properties")
 @EnableWs
 @ComponentScan(basePackages = "com.ilyachuvaev")
-public class WebServiceConfig implements WebMvcConfigurer {
+public class WebServiceConfig extends WsConfigurerAdapter {
 
     @Bean
     public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
     }
 
+    @Bean
+    public ServletRegistrationBean messageDispatcherServlet(ApplicationContext applicationContext){
+        MessageDispatcherServlet servlet = new MessageDispatcherServlet();
+        servlet.setApplicationContext(applicationContext);
+        servlet.setTransformWsdlLocations(true);
+        return new ServletRegistrationBean(servlet, "/ws/*");
+    }
 
-    @Bean(name = "Contacts")
+    @Bean(name = "contacts")
     public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema contactsSchema){
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("ContactsPort");
@@ -40,7 +50,7 @@ public class WebServiceConfig implements WebMvcConfigurer {
 
     @Bean
     public XsdSchema contactsSchema(){
-        return new SimpleXsdSchema(new ClassPathResource("contacts.wsdl"));
+        return new SimpleXsdSchema(new ClassPathResource("xsd/contacts.xsd"));
     }
 
 
@@ -53,12 +63,10 @@ public class WebServiceConfig implements WebMvcConfigurer {
         return viewResolver;
     }
 
-    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
-    @Override
     public void addViewControllers(ViewControllerRegistry registry){
         registry.addViewController("/").setViewName("forward:/index.jsp");
     }

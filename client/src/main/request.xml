@@ -1,11 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-                  xmlns:gs="http://ilyachuvaev.com/soapservice"
-                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                  xsi:schemaLocation="http://ilyachuvaev.com/soapservice ">
+                  xmlns:gs="http://ilyachuvaev.com/soapservice">
     <soapenv:Header/>
     <soapenv:Body>
-        <gs:getContactDetails>
-            <gs:id>1</gs:id>
-        </gs:getContactDetails>
+        <gs:contactRequest>
+            <gs:Contact>
+                <gs:id>1L</gs:id>
+            </gs:Contact>
+        </gs:contactRequest>
     </soapenv:Body>
 </soapenv:Envelope>

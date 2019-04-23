@@ -18,7 +18,7 @@ public class SoapClient {
         this.webServiceTemplate = webServiceTemplate;
     }
 
-    public ContactResponse getContactDetails(Long id){
+    public ContactResponse getContact(Long id){
         ObjectFactory factory = new ObjectFactory();
         Contact contact = factory.createContact();
         contact.setId(id);

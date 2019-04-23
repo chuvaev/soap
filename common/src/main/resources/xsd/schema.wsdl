@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <wsdl:definitions name="SoapService" targetNamespace="http://ilyachuvaev.com/soapservice"
                   xmlns:tns="http://ilyachuvaev.com/soapservice"
-                  xmlns:types="http://ilyachuvaev.com/soapservice"
-                  xmlns:s="http://www.w3.org/2001/XMLSchema"
                   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
                   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <wsdl:types>
         <xsd:schema targetNamespace="http://ilyachuvaev.com/soapservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                     xmlns:tns="http://ilyachuvaev.com/soapservice"
-                    elementFormDefault="qualified" attributeFormDefault="unqualified" >
+                    elementFormDefault="qualified" attributeFormDefault="qualified" >
 
             <xsd:element name="contactRequest">
                 <xsd:complexType>
@@ -25,8 +23,16 @@
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
+
+            <xsd:element name="postRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Contact" type="tns:Contact"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
             
-            <xsd:element name="PostResponse">
+            <xsd:element name="postResponse">
                 <xsd:complexType>
                     <xsd:sequence>
                         <xsd:element minOccurs="1" maxOccurs="1" name="PostResult" type="xsd:int"/>
@@ -54,15 +60,14 @@
     </wsdl:message>
 
     <wsdl:message name="ContactHttpPostIn">
-        <wsdl:part name="n1" type="s:string" />
-        <wsdl:part name="n2" type="s:string" />
+        <wsdl:part element="postRequest" name="parameters"/>
     </wsdl:message>
     <wsdl:message name="ContactHttpPostOut">
-        <wsdl:part name="Body" type="s:int" />
+        <wsdl:part element="postResponse" name="parameters"/>
     </wsdl:message>
 
     <wsdl:portType name="Contacts">
-        <wsdl:operation name="getContactDetails">
+        <wsdl:operation name="getContact">
             <wsdl:input message="tns:ContactRequest"/>
             <wsdl:output message="tns:ContactResponse"/>
         </wsdl:operation>
@@ -77,8 +82,8 @@
 
     <wsdl:binding name="ContactServiceSoapBinding" type="Contacts">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <wsdl:operation name="getContactDetails">
-        <soap:operation soapAction="http://www.ilyachuvaev.com/services/getContactDetails"/>
+        <wsdl:operation name="getContact">
+        <soap:operation soapAction="http://www.ilyachuvaev.com/soapservice/ws/getContact"/>
         <wsdl:input>
             <soap:body use="literal"/>
         </wsdl:input>
@@ -87,9 +92,11 @@
         </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
+
     <wsdl:binding name="ContactServiceHttpPost" type="ContactHttpPost">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <wsdl:operation name="addContact">
-            <soap:operation soapAction="http://www.ilyachuvaev.com/services/addContact"/>
+            <soap:operation soapAction="http://www.ilyachuvaev.com/soapservice/ws/addContact"/>
             <wsdl:input>
                 <soap:body use="literal"/>
             </wsdl:input>

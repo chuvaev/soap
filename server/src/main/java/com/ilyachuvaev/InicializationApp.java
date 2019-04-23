@@ -1,7 +1,7 @@
 package com.ilyachuvaev;
 
 import com.ilyachuvaev.repository.ContactRepository;
-import org.springframework.boot.SpringApplication;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -10,9 +10,11 @@ import javax.annotation.PostConstruct;
 @Component
 public class InicializationApp {
 
+    @Autowired
+    private ConfigurableApplicationContext context;
+
     @PostConstruct
     public void init(){
-        ConfigurableApplicationContext context = SpringApplication.run(SoapApplication.class);
         ContactRepository repository = context.getBean(ContactRepository.class);
         Contact contact = new Contact();
         contact.setId(1L);
@@ -61,8 +63,8 @@ public class InicializationApp {
         contact4.setPhone("+76523265984");
         contact4.setEmail("tair@pol.com");
         repository.save(contact5);
-
     }
 
-    InicializationApp(){}
+    InicializationApp(){ }
+
 }
