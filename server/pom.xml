@@ -20,7 +20,6 @@
         <jax.version>2.3.1</jax.version>
         <jws.version>3.1.2.2</jws.version>
         <jsp.version>1.2</jsp.version>
-        <wsdl4j.version>1.6.3</wsdl4j.version>
     </properties>
 
     <dependencies>
@@ -68,7 +67,6 @@
         <dependency>
             <groupId>wsdl4j</groupId>
             <artifactId>wsdl4j</artifactId>
-            <version>${wsdl4j.version}</version>
         </dependency>
         <dependency>
             <groupId>com.ilyachuvaev</groupId>

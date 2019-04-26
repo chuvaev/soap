@@ -26,7 +26,7 @@ public class ContactServiceEndpoint {
         this.contactService = contactService;
     }
 
-    @PayloadRoot(localPart = "contactRequest", namespace = TARGET_NAMESPACE)
+    @PayloadRoot(localPart = "getContact", namespace = TARGET_NAMESPACE)
     @ResponsePayload
     public ContactResponse getContact(@RequestPayload ContactRequest request) {
         ContactResponse response = new ContactResponse();

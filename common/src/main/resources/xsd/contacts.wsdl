@@ -35,7 +35,7 @@
             <xsd:element name="postResponse">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element minOccurs="1" maxOccurs="1" name="PostResult" type="xsd:int"/>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="PostResult" type="xsd:long"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
@@ -80,10 +80,10 @@
             </wsdl:operation>
     </wsdl:portType>
 
-    <wsdl:binding name="ContactServiceSoapBinding" type="Contacts">
+    <wsdl:binding name="ContactServiceGet" type="Contacts">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <wsdl:operation name="getContact">
-        <soap:operation soapAction="http://www.ilyachuvaev.com/soapservice/ws/getContact"/>
+        <soap:operation soapAction="http://www.ilyachuvaev.com/soapservice/services/getContact"/>
         <wsdl:input>
             <soap:body use="literal"/>
         </wsdl:input>
@@ -93,10 +93,10 @@
         </wsdl:operation>
     </wsdl:binding>
 
-    <wsdl:binding name="ContactServiceHttpPost" type="ContactHttpPost">
+    <wsdl:binding name="ContactServicePost" type="ContactHttpPost">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <wsdl:operation name="addContact">
-            <soap:operation soapAction="http://www.ilyachuvaev.com/soapservice/ws/addContact"/>
+            <soap:operation soapAction="http://www.ilyachuvaev.com/soapservice/services/addContact"/>
             <wsdl:input>
                 <soap:body use="literal"/>
             </wsdl:input>
@@ -107,8 +107,8 @@
     </wsdl:binding>
 
     <wsdl:service name="ContactService">
-        <wsdl:port binding="tns:ContactServiceSoapBinding" name="ContactsPort">
-            <soap:address location="http://localhost:8080/soapservice/ws"/>
+        <wsdl:port binding="tns:ContactServiceGet" name="ContactsPort">
+            <soap:address location="http://localhost:8080/soapservice/ws/"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

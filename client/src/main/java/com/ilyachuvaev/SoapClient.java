@@ -6,41 +6,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ws.client.core.WebServiceTemplate;
 
+import javax.xml.bind.JAXBElement;
+
 @Component
 public class SoapClient {
     // http://localhost:8080/soapservice/ws/contacts.wsdl
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SoapClient.class);
-    private WebServiceTemplate webServiceTemplate;
+
 
     @Autowired
-    public void setWebServiceTemplate(WebServiceTemplate webServiceTemplate){
-        this.webServiceTemplate = webServiceTemplate;
+    private WebServiceTemplate webServiceTemplate;
+
+    public Contact getContact(Long id){
+       ContactRequest contactRequest = new ObjectFactory().createContactRequest();
+       Contact contact = contactRequest.getContact();
+       contact.setId(id);
+       LOGGER.info("Client sending Contact[id={}]", contactRequest.getContact().getId());
+       JAXBElement<Contact> responseContact = (JAXBElement<Contact>) webServiceTemplate.marshalSendAndReceive(contactRequest);
+       LOGGER.info("Client received Contact[id={}]", responseContact.getValue().getId());
+       return responseContact.getValue();
     }
 
-    public ContactResponse getContact(Long id){
-        ObjectFactory factory = new ObjectFactory();
-        Contact contact = factory.createContact();
-        contact.setId(id);
+    public Long addContact(ContactRequest request){
+       ContactRequest contactRequest = new ObjectFactory().createContactRequest();
+       contactRequest.setContact(request.getContact());
 
-        LOGGER.info("Client sending Contact[firstName={}]", contact.getFirstName());
-        ContactResponse response = (ContactResponse) webServiceTemplate.marshalSendAndReceive(contact);
-
-        return response;
-    }
-
-    public PostResponse addContact(Contact contact){
-        ObjectFactory factory = new ObjectFactory();
-        Contact contact1 = factory.createContact();
-        contact1.setId(contact.getId());
-        contact1.setFirstName(contact.getFirstName());
-        contact1.setLastName(contact.getLastName());
-        contact1.setEmail(contact.getEmail());
-        contact1.setPhone(contact.getPhone());
-
-        LOGGER.info("Client adding Contact[id={}]", contact1.getId());
-        PostResponse postResponse = (PostResponse) webServiceTemplate.marshalSendAndReceive(contact1);
-        return postResponse;
+       LOGGER.info("Client adding Contact[id={}]", contactRequest.getContact().getId());
+       JAXBElement<Contact> responseContact = (JAXBElement<Contact>) webServiceTemplate.marshalSendAndReceive(contactRequest);
+       LOGGER.info("Client received Contact[id={}]", responseContact.getValue().getId());
+       return responseContact.getValue().getId();
     }
 
 }

@@ -57,7 +57,6 @@
             <version>${jakarta.version}</version>
             <scope>runtime</scope>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -85,7 +84,7 @@
                 <configuration>
                     <sources>
                         <source>src/main/resources/xsd/dummy.xsd</source>
-                        <source>src/main/resources/xsd/schema.wsdl</source>
+                        <source>src/main/resources/xsd/contacts.wsdl</source>
                     </sources>
                     <packageName>com.ilyachuvaev</packageName>
                     <arguments>-wsdl</arguments>
