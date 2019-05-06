@@ -18,19 +18,19 @@ public class SoapApplicationTests {
     @Test
     public void testGetContact(){
         Contact contact = new Contact();
-        contact.setId(1);
+        contact.setId(1L);
         contact.setFirstName("John");
         contact.setLastName("Johnson");
         contact.setPhone("+74951512365");
         contact.setEmail("jony@john.com");
-        assertThat(soapClient.getContact(1L)).isEqualTo(contact);
+        assertThat(soapClient.getContact(contact.getId())).isEqualTo(contact);
     }
 
     @Test
     public void testAddContact(){
         ContactRequest contactRequest = new ContactRequest();
         Contact contact = new Contact();
-        contact.setId(7);
+        contact.setId(7L);
         contact.setFirstName("Millow");
         contact.setLastName("Whollis");
         contact.setPhone("+74562369865");

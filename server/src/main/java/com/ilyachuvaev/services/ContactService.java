@@ -1,13 +1,12 @@
 package com.ilyachuvaev.services;
 
-
-import com.ilyachuvaev.Contact;
+import com.ilyachuvaev.entity.ContactMapper;
 
 public interface ContactService {
 
-    Contact getContact(Long id);
+    ContactMapper getContact(Long id);
 
-    long saveOrUpdate(Contact contact);
+    long saveOrUpdate(ContactMapper contact);
 
     long delete(Long id);
 

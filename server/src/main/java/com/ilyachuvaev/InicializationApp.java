@@ -1,5 +1,6 @@
 package com.ilyachuvaev;
 
+import com.ilyachuvaev.entity.ContactMapper;
 import com.ilyachuvaev.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -16,7 +17,7 @@ public class InicializationApp {
     @PostConstruct
     public void init(){
         ContactRepository repository = context.getBean(ContactRepository.class);
-        Contact contact = new Contact();
+        ContactMapper contact = new ContactMapper();
         contact.setId(1L);
         contact.setFirstName("John");
         contact.setLastName("Johnson");
@@ -24,7 +25,7 @@ public class InicializationApp {
         contact.setEmail("jony@john.com");
         repository.save(contact);
 
-        Contact contact1 = new Contact();
+        ContactMapper contact1 = new ContactMapper();
         contact1.setId(2L);
         contact1.setFirstName("Sally");
         contact1.setLastName("Sally");
@@ -32,7 +33,7 @@ public class InicializationApp {
         contact1.setEmail("saly@saly.com");
         repository.save(contact1);
 
-        Contact contact2 = new Contact();
+        ContactMapper contact2 = new ContactMapper();
         contact2.setId(3L);
         contact2.setFirstName("Tony");
         contact2.setLastName("Tony");
@@ -40,7 +41,7 @@ public class InicializationApp {
         contact2.setEmail("tony@tony.com");
         repository.save(contact2);
 
-        Contact contact3 = new Contact();
+        ContactMapper contact3 = new ContactMapper();
         contact3.setId(4L);
         contact3.setFirstName("Bob");
         contact3.setLastName("Bobby");
@@ -48,7 +49,7 @@ public class InicializationApp {
         contact3.setEmail("bob@bob.com");
         repository.save(contact3);
 
-        Contact contact4 = new Contact();
+        ContactMapper contact4 = new ContactMapper();
         contact4.setId(5L);
         contact4.setFirstName("Ruby");
         contact4.setLastName("Ruby");
@@ -56,7 +57,7 @@ public class InicializationApp {
         contact4.setEmail("ruby@ruby.com");
         repository.save(contact4);
 
-        Contact contact5 = new Contact();
+        ContactMapper contact5 = new ContactMapper();
         contact4.setId(6L);
         contact4.setFirstName("Tair");
         contact4.setLastName("Polish");

@@ -6,6 +6,7 @@ import com.ilyachuvaev.Contact;
 import com.ilyachuvaev.ContactRequest;
 import com.ilyachuvaev.ContactResponse;
 import com.ilyachuvaev.ObjectFactory;
+import com.ilyachuvaev.entity.ContactMapper;
 import com.ilyachuvaev.services.ContactServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -39,7 +40,7 @@ public class ContactServiceEndpoint {
     @ResponsePayload
     public long addContact(@RequestPayload ContactRequest request) {
         ObjectFactory factory = new ObjectFactory();
-        Contact contact = factory.createContact();
+        ContactMapper contact = (ContactMapper) factory.createContact();
         contactService.saveOrUpdate(contact);
         return contact.getId();
     }
@@ -47,7 +48,7 @@ public class ContactServiceEndpoint {
     @PayloadRoot(localPart = "updateContact", namespace = TARGET_NAMESPACE)
     @ResponsePayload
     public ContactResponse updateContact(@RequestPayload ContactRequest request) {
-        Contact contact = request.getContact();
+        ContactMapper contact = (ContactMapper) request.getContact();
         ContactResponse response = new ContactResponse();
         contactService.saveOrUpdate(contact);
         response.setContact(contact);

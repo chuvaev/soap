@@ -1,6 +1,6 @@
 package com.ilyachuvaev.services;
 
-import com.ilyachuvaev.Contact;
+import com.ilyachuvaev.entity.ContactMapper;
 import com.ilyachuvaev.exception.ContactNotFoundException;
 import com.ilyachuvaev.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +29,14 @@ public class ContactServiceImpl implements ContactService{
     }
 
     @WebMethod
-    public Contact getContact(Long id){
-        Optional<Contact> contact = contactRepository.findById(id);
+    public ContactMapper getContact(Long id){
+        Optional<ContactMapper> contact = contactRepository.findById(id);
         return contact.orElseThrow(() -> new ContactNotFoundException("Contact with id = " + id + " not found)"));
 
     }
 
     @WebMethod
-    public long saveOrUpdate(Contact contact){
+    public long saveOrUpdate(ContactMapper contact){
         if (contact != null){
             contactRepository.save(contact);
         }else {
@@ -47,7 +47,7 @@ public class ContactServiceImpl implements ContactService{
 
     @WebMethod
     public long  delete(Long id){
-        Optional<Contact> contact = contactRepository.findById(id);
+        Optional<ContactMapper> contact = contactRepository.findById(id);
         contact.ifPresentOrElse(
                 v -> contactRepository.deleteById(id),
                 () -> new ContactNotFoundException("Contact with id = " + id + " not found")
@@ -56,20 +56,20 @@ public class ContactServiceImpl implements ContactService{
     }
 
     @WebMethod
-    public List<Contact> getContacts(){
-        List<Contact> contacts = getAllContacts();
-        LinkedList<Contact> contactsList = new LinkedList<>();
-        Iterator<Contact> iterator = contacts.iterator();
+    public List<ContactMapper> getContacts(){
+        List<ContactMapper> contacts = getAllContacts();
+        LinkedList<ContactMapper> contactsList = new LinkedList<>();
+        Iterator<ContactMapper> iterator = contacts.iterator();
         int point = 0;
         while (iterator.hasNext() && point <= size){
-            Contact i = iterator.next();
+            ContactMapper i = iterator.next();
             contacts.add(i);
             point++;
         }
         return contactsList;
     }
 
-    public List<Contact> getAllContacts(){return (List<Contact>) contactRepository.findAll();}
+    public List<ContactMapper> getAllContacts(){return (List<ContactMapper>) contactRepository.findAll();}
 
 
 

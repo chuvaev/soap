@@ -10,7 +10,7 @@ import javax.xml.bind.JAXBElement;
 
 @Component
 public class SoapClient {
-    // http://localhost:8080/soapservice/ws/contacts.wsdl
+//     http://localhost:8080/soapservice/ws/contacts.wsdl
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SoapClient.class);
 

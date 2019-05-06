@@ -83,7 +83,7 @@
     <wsdl:binding name="ContactServiceGet" type="Contacts">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <wsdl:operation name="getContact">
-        <soap:operation soapAction="http://www.ilyachuvaev.com/soapservice/services/getContact"/>
+        <soap:operation soapAction="http://www.ilyachuvaev.com/soapservice/getContact"/>
         <wsdl:input>
             <soap:body use="literal"/>
         </wsdl:input>
@@ -96,7 +96,7 @@
     <wsdl:binding name="ContactServicePost" type="ContactHttpPost">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <wsdl:operation name="addContact">
-            <soap:operation soapAction="http://www.ilyachuvaev.com/soapservice/services/addContact"/>
+            <soap:operation soapAction="http://www.ilyachuvaev.com/soapservice/addContact"/>
             <wsdl:input>
                 <soap:body use="literal"/>
             </wsdl:input>
