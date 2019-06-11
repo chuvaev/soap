@@ -2,21 +2,19 @@ package com.ilyachuvaev;
 
 import com.ilyachuvaev.entity.ContactMapper;
 import com.ilyachuvaev.repository.ContactRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ConfigurableApplicationContext;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
 @Component
+@RequiredArgsConstructor
 public class InicializationApp {
 
-    @Autowired
-    private ConfigurableApplicationContext context;
+    private final ContactRepository repository;
 
     @PostConstruct
     public void init(){
-        ContactRepository repository = context.getBean(ContactRepository.class);
         ContactMapper contact = new ContactMapper();
         contact.setId(1L);
         contact.setFirstName("John");
@@ -58,14 +56,11 @@ public class InicializationApp {
         repository.save(contact4);
 
         ContactMapper contact5 = new ContactMapper();
-        contact4.setId(6L);
-        contact4.setFirstName("Tair");
-        contact4.setLastName("Polish");
-        contact4.setPhone("+76523265984");
-        contact4.setEmail("tair@pol.com");
+        contact5.setId(6L);
+        contact5.setFirstName("Tair");
+        contact5.setLastName("Polish");
+        contact5.setPhone("+76523265984");
+        contact5.setEmail("tair@pol.com");
         repository.save(contact5);
     }
-
-    InicializationApp(){ }
-
 }

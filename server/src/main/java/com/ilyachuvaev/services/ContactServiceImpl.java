@@ -3,7 +3,7 @@ package com.ilyachuvaev.services;
 import com.ilyachuvaev.entity.ContactMapper;
 import com.ilyachuvaev.exception.ContactNotFoundException;
 import com.ilyachuvaev.repository.ContactRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
@@ -16,17 +16,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 @WebService(serviceName = "ContactService", portName = "ContactServicePort", targetNamespace = "http://soapservice.ilyachuvaev.com")
 @SOAPBinding(style = SOAPBinding.Style.DOCUMENT, use = SOAPBinding.Use.LITERAL, parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
 public class ContactServiceImpl implements ContactService{
 
-    private ContactRepository contactRepository;
+    private final ContactRepository contactRepository;
     private int size = 2;
-
-    @Autowired
-    public void setContactRepository(ContactRepository contactRepository) {
-        this.contactRepository = contactRepository;
-    }
 
     @WebMethod
     public ContactMapper getContact(Long id){

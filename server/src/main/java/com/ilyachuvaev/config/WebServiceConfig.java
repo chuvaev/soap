@@ -41,7 +41,6 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return wsdl11Definition;
     }
 
-
     @Bean
     public InternalResourceViewResolver jspViewResolver(){
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
