@@ -14,10 +14,12 @@ public class ContactServiceImplTest {
   private ContactServiceImpl recordService;
 
   @Before
-  public void setUp(){MockitoAnnotations.initMocks(this); }
+  public void setUp() {
+    MockitoAnnotations.initMocks(this);
+  }
 
   @Test
-  public void getContact_forExistingEntity(){
+  public void getContact_forExistingEntity() {
     //given:
     ContactMapper testContact = new ContactMapper();
     testContact.setId(1L);
@@ -30,17 +32,16 @@ public class ContactServiceImplTest {
     ContactMapper result = recordService.getContact(testContact.getId());
 
     //then:
-    assertEquals(testContact.getId(),result.getId());
-    assertEquals(testContact.getFirstName(),result.getFirstName());
-    assertEquals(testContact.getLastName(),result.getLastName());
-    assertEquals(testContact.getPhone(),result.getPhone());
-    assertEquals(testContact.getEmail(),result.getEmail());
+    assertEquals(testContact.getId(), result.getId());
+    assertEquals(testContact.getFirstName(), result.getFirstName());
+    assertEquals(testContact.getLastName(), result.getLastName());
+    assertEquals(testContact.getPhone(), result.getPhone());
+    assertEquals(testContact.getEmail(), result.getEmail());
   }
 
   @Test
-  public void saveOrUpdate_forExistingEntityClass(){
+  public void saveOrUpdate_forExistingEntityClass() {
     //given:
-
 
     //when:
 
@@ -49,9 +50,8 @@ public class ContactServiceImplTest {
   }
 
   @Test
-  public void delete_forExistingEntityClass(){
+  public void delete_forExistingEntityClass() {
     //given:
-
 
     //when:
 
@@ -60,9 +60,8 @@ public class ContactServiceImplTest {
   }
 
   @Test
-  public void getContacts_forExistingEntityClass(){
+  public void getContacts_forExistingEntityClass() {
     //given:
-
 
     //when:
 

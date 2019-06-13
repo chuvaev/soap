@@ -22,32 +22,32 @@ import org.springframework.ws.wsdl.wsdl11.Wsdl11Definition;
 @ComponentScan(basePackages = "com.ilyachuvaev")
 public class WebServiceConfig extends WsConfigurerAdapter {
 
-    @Bean
-    public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
-    }
+  @Bean
+  public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+    return new PropertySourcesPlaceholderConfigurer();
+  }
 
-    @Bean
-    public ServletRegistrationBean messageDispatcherServlet(ApplicationContext applicationContext){
-        MessageDispatcherServlet servlet = new MessageDispatcherServlet();
-        servlet.setApplicationContext(applicationContext);
-        return new ServletRegistrationBean(servlet,"/soapservice/ws/*");
-    }
+  @Bean
+  public ServletRegistrationBean messageDispatcherServlet(ApplicationContext applicationContext) {
+    MessageDispatcherServlet servlet = new MessageDispatcherServlet();
+    servlet.setApplicationContext(applicationContext);
+    return new ServletRegistrationBean(servlet, "/soapservice/ws/*");
+  }
 
-    @Bean(name = "contacts")
-    public Wsdl11Definition defaultWsdl11Definition(){
-        SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
-        wsdl11Definition.setWsdl(new ClassPathResource("xsd/contacts.wsdl"));
-        return wsdl11Definition;
-    }
+  @Bean(name = "contacts")
+  public Wsdl11Definition defaultWsdl11Definition() {
+    SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
+    wsdl11Definition.setWsdl(new ClassPathResource("xsd/contacts.wsdl"));
+    return wsdl11Definition;
+  }
 
-    @Bean
-    public InternalResourceViewResolver jspViewResolver(){
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setOrder(1);
-        viewResolver.setPrefix("/resources/view/");
-        viewResolver.setSuffix(".jsp");
-        return viewResolver;
-    }
+  @Bean
+  public InternalResourceViewResolver jspViewResolver() {
+    InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+    viewResolver.setOrder(1);
+    viewResolver.setPrefix("/resources/view/");
+    viewResolver.setSuffix(".jsp");
+    return viewResolver;
+  }
 
 }

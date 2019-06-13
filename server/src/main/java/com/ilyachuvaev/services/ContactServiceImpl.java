@@ -19,54 +19,55 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @WebService(serviceName = "ContactService", portName = "ContactServicePort", targetNamespace = "http://soapservice.ilyachuvaev.com")
 @SOAPBinding(style = SOAPBinding.Style.DOCUMENT, use = SOAPBinding.Use.LITERAL, parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
-public class ContactServiceImpl implements ContactService{
+public class ContactServiceImpl implements ContactService {
 
-    private final ContactRepository contactRepository;
-    private int size = 2;
+  private final ContactRepository contactRepository;
+  private int size = 2;
 
-    @WebMethod
-    public ContactMapper getContact(Long id){
-        Optional<ContactMapper> contact = contactRepository.findById(id);
-        return contact.orElseThrow(() -> new ContactNotFoundException("Contact with id = " + id + " not found)"));
+  @WebMethod
+  public ContactMapper getContact(Long id) {
+    Optional<ContactMapper> contact = contactRepository.findById(id);
+    return contact.orElseThrow(() -> new ContactNotFoundException("Contact with id = " + id + " not found)"));
 
+  }
+
+  @WebMethod
+  public long saveOrUpdate(ContactMapper contact) {
+    if (contact != null) {
+      contactRepository.save(contact);
+    } else {
+      throw new ContactNotFoundException("Contact not found)");
     }
+    return contact.getId();
+  }
 
-    @WebMethod
-    public long saveOrUpdate(ContactMapper contact){
-        if (contact != null){
-            contactRepository.save(contact);
-        }else {
-            throw new ContactNotFoundException("Contact not found)");
-        }
-        return contact.getId();
+  @WebMethod
+  public long delete(Long id) {
+    Optional<ContactMapper> contact = contactRepository.findById(id);
+    contact.ifPresentOrElse(
+        v -> contactRepository.deleteById(id),
+        () -> new ContactNotFoundException("Contact with id = " + id + " not found")
+    );
+    return id;
+  }
+
+  @WebMethod
+  public List<ContactMapper> getContacts() {
+    List<ContactMapper> contacts = getAllContacts();
+    LinkedList<ContactMapper> contactsList = new LinkedList<>();
+    Iterator<ContactMapper> iterator = contacts.iterator();
+    int point = 0;
+    while (iterator.hasNext() && point <= size) {
+      ContactMapper i = iterator.next();
+      contacts.add(i);
+      point++;
     }
+    return contactsList;
+  }
 
-    @WebMethod
-    public long  delete(Long id){
-        Optional<ContactMapper> contact = contactRepository.findById(id);
-        contact.ifPresentOrElse(
-                v -> contactRepository.deleteById(id),
-                () -> new ContactNotFoundException("Contact with id = " + id + " not found")
-        );
-        return id;
-    }
-
-    @WebMethod
-    public List<ContactMapper> getContacts(){
-        List<ContactMapper> contacts = getAllContacts();
-        LinkedList<ContactMapper> contactsList = new LinkedList<>();
-        Iterator<ContactMapper> iterator = contacts.iterator();
-        int point = 0;
-        while (iterator.hasNext() && point <= size){
-            ContactMapper i = iterator.next();
-            contacts.add(i);
-            point++;
-        }
-        return contactsList;
-    }
-
-    public List<ContactMapper> getAllContacts(){return (List<ContactMapper>) contactRepository.findAll();}
-
+  public List<ContactMapper> getAllContacts() {
+    return (List<ContactMapper>) contactRepository.findAll();
+  }
 
 
 }

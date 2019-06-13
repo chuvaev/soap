@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class ContactsErrorResponse {
 
-    private int status;
-    private String message;
-    private long timestamp;
+  private int status;
+  private String message;
+  private long timestamp;
 
 }
