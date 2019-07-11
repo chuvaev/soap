@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<wsdl:definitions name="SoapService" targetNamespace="http://ilyachuvaev.com/soapservice"
-                  xmlns:tns="http://ilyachuvaev.com/soapservice"
+<wsdl:definitions name="SoapService" targetNamespace="http://localhost:8080/soapservice/ws"
+                  xmlns:tns="http://localhost:8080/soapservice/ws"
                   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
                   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <wsdl:types>
-        <xsd:schema targetNamespace="http://ilyachuvaev.com/soapservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                    xmlns:tns="http://ilyachuvaev.com/soapservice"
+        <xsd:schema targetNamespace="http://localhost:8080/soapservice/ws" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                    xmlns:tns="http://localhost:8080/soapservice/ws"
                     elementFormDefault="qualified" attributeFormDefault="qualified" >
 
             <xsd:element name="contactRequest">
@@ -83,7 +83,7 @@
     <wsdl:binding name="ContactServiceGet" type="Contacts">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <wsdl:operation name="getContact">
-        <soap:operation soapAction="http://www.ilyachuvaev.com/soapservice/getContact"/>
+        <soap:operation soapAction="http://localhost:8080/soapservice/ws/getContact"/>
         <wsdl:input>
             <soap:body use="literal"/>
         </wsdl:input>
@@ -96,7 +96,7 @@
     <wsdl:binding name="ContactServicePost" type="ContactHttpPost">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <wsdl:operation name="addContact">
-            <soap:operation soapAction="http://www.ilyachuvaev.com/soapservice/addContact"/>
+            <soap:operation soapAction="http://localhost:8080/soapservice/ws/addContact"/>
             <wsdl:input>
                 <soap:body use="literal"/>
             </wsdl:input>
@@ -107,7 +107,7 @@
     </wsdl:binding>
 
     <wsdl:service name="ContactService">
-        <wsdl:port binding="tns:ContactServiceGet" name="ContactsPort">
+        <wsdl:port binding="tns:ContactServiceGet" name="Contacts">
             <soap:address location="http://localhost:8080/soapservice/ws/"/>
         </wsdl:port>
     </wsdl:service>

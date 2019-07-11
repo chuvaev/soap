@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@WebService(serviceName = "ContactService", portName = "ContactServicePort", targetNamespace = "http://soapservice.ilyachuvaev.com")
+@WebService(serviceName = "ContactService", portName = "ContactServicePort", targetNamespace = "http://localhost:8080/soapservice/ws")
 @SOAPBinding(style = SOAPBinding.Style.DOCUMENT, use = SOAPBinding.Use.LITERAL, parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
 public class ContactServiceImpl implements ContactService {
 
@@ -44,10 +44,11 @@ public class ContactServiceImpl implements ContactService {
   @WebMethod
   public long delete(Long id) {
     Optional<ContactMapper> contact = contactRepository.findById(id);
-    contact.ifPresentOrElse(
-        v -> contactRepository.deleteById(id),
-        () -> new ContactNotFoundException("Contact with id = " + id + " not found")
-    );
+    if (contact.isPresent()){
+      contactRepository.deleteById(id);
+    } else {
+      throw new ContactNotFoundException("Contact with id = " + id + " not found");
+    }
     return id;
   }
 

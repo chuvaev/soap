@@ -45,7 +45,7 @@ public class ContactServiceImplTest {
   }
 
   @Test
-  public void saveOrUpdate_forExistingEntityClass() {
+  public void saveOrUpdate_forExistingEntityClass() { // TODO
     //given:
 
     //when:
@@ -55,7 +55,7 @@ public class ContactServiceImplTest {
   }
 
   @Test
-  public void delete_forExistingEntityClass() {
+  public void delete_forExistingEntityClass() { // TODO
     //given:
 
     //when:
@@ -65,7 +65,7 @@ public class ContactServiceImplTest {
   }
 
   @Test
-  public void getContacts_forExistingEntityClass() {
+  public void getContacts_forExistingEntityClass() { // TODO
     //given:
 
     //when:

@@ -1,5 +1,6 @@
 package com.ilyachuvaev.config;
 
+import com.ilyachuvaev.Contact;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -12,8 +13,9 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.ws.config.annotation.EnableWs;
 import org.springframework.ws.config.annotation.WsConfigurerAdapter;
 import org.springframework.ws.transport.http.MessageDispatcherServlet;
-import org.springframework.ws.wsdl.wsdl11.SimpleWsdl11Definition;
-import org.springframework.ws.wsdl.wsdl11.Wsdl11Definition;
+import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
+import org.springframework.xml.xsd.SimpleXsdSchema;
+import org.springframework.xml.xsd.XsdSchema;
 
 
 @Configuration
@@ -31,14 +33,23 @@ public class WebServiceConfig extends WsConfigurerAdapter {
   public ServletRegistrationBean messageDispatcherServlet(ApplicationContext applicationContext) {
     MessageDispatcherServlet servlet = new MessageDispatcherServlet();
     servlet.setApplicationContext(applicationContext);
+    servlet.setTransformWsdlLocations(true);
     return new ServletRegistrationBean(servlet, "/soapservice/ws/*");
   }
 
   @Bean(name = "contacts")
-  public Wsdl11Definition defaultWsdl11Definition() {
-    SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
-    wsdl11Definition.setWsdl(new ClassPathResource("xsd/contacts.wsdl"));
+  public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema contactSchema) {
+    DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+    wsdl11Definition.setPortTypeName("Contacts");
+    wsdl11Definition.setLocationUri("/soapservice/ws");
+    wsdl11Definition.setTargetNamespace("http://localhost:8080");
+    wsdl11Definition.setSchema(contactSchema);
     return wsdl11Definition;
+  }
+
+  @Bean
+  public SimpleXsdSchema contactSchema(){
+    return new SimpleXsdSchema(new ClassPathResource("xsd/contacts.wsdl"));
   }
 
   @Bean

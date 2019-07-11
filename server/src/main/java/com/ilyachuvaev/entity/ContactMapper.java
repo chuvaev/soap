@@ -1,27 +1,36 @@
 package com.ilyachuvaev.entity;
 
 import com.ilyachuvaev.Contact;
+import com.ilyachuvaev.ObjectFactory;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class ContactMapper extends Contact {
+public class ContactMapper extends Contact{
+
+//  private Contact contact;
 
   @Id
   @GeneratedValue
   private long id;
+  @Column
   private String firstName;
+  @Column
   private String lastName;
+  @Column
   private String phone;
+  @Column
   private String email;
 
   public ContactMapper() {
-    this.id = super.getId();
-    this.firstName = super.getFirstName();
-    this.lastName = super.getLastName();
-    this.phone = super.getPhone();
-    this.email = super.getEmail();
+//    this.contact = new ObjectFactory().createContact();
+    this.id = super.id;
+    this.firstName = super.firstName;
+    this.lastName = super.lastName;
+    this.phone = super.phone;
+    this.email = super.email;
   }
 
   public long getId() {
