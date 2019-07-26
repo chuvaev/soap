@@ -1,0 +1,46 @@
+<xsd:schema targetNamespace="http://localhost:8080/soapservice/ws" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:tns="http://localhost:8080/soapservice/ws"
+  elementFormDefault="qualified" attributeFormDefault="qualified" >
+
+  <xsd:element name="contactRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Contact" type="tns:Contact"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="contactResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Contact" type="tns:Contact"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="postRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Contact" type="tns:Contact"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="postResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element minOccurs="1" maxOccurs="1" name="PostResult" type="xsd:long"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:complexType name="Contact">
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:long"/>
+      <xsd:element name="firstName" type="xsd:string"/>
+      <xsd:element name="lastName" type="xsd:string"/>
+      <xsd:element name="phone" type="xsd:string"/>
+      <xsd:element name="email" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

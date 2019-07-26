@@ -1,6 +1,7 @@
 package com.ilyachuvaev.config;
 
-import com.ilyachuvaev.Contact;
+import javax.wsdl.xml.WSDLReader;
+import javax.wsdl.xml.WSDLWriter;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +20,7 @@ import org.springframework.xml.xsd.XsdSchema;
 
 
 @Configuration
-@PropertySource(value = "classpath:application.properties")
+@PropertySource(value = "classpath:application.yml")
 @EnableWs
 @ComponentScan(basePackages = "com.ilyachuvaev")
 public class WebServiceConfig extends WsConfigurerAdapter {
@@ -34,22 +35,22 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     MessageDispatcherServlet servlet = new MessageDispatcherServlet();
     servlet.setApplicationContext(applicationContext);
     servlet.setTransformWsdlLocations(true);
-    return new ServletRegistrationBean(servlet, "/soapservice/ws/*");
+    return new ServletRegistrationBean(servlet, "/ws/*");
   }
 
   @Bean(name = "contacts")
   public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema contactSchema) {
     DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
     wsdl11Definition.setPortTypeName("Contacts");
-    wsdl11Definition.setLocationUri("/soapservice/ws");
-    wsdl11Definition.setTargetNamespace("http://localhost:8080");
+    wsdl11Definition.setLocationUri("/ws");
+    wsdl11Definition.setTargetNamespace("http://localhost:8080/soapservice");
     wsdl11Definition.setSchema(contactSchema);
     return wsdl11Definition;
   }
 
   @Bean
-  public SimpleXsdSchema contactSchema(){
-    return new SimpleXsdSchema(new ClassPathResource("xsd/contacts.wsdl"));
+  public XsdSchema contactSchema(){
+    return new SimpleXsdSchema(new ClassPathResource("xsd/contacts.xsd"));
   }
 
   @Bean

@@ -16,7 +16,7 @@
         <spring.ws.version>3.0.7.RELEASE</spring.ws.version>
         <spring-data.version>2.1.8.RELEASE</spring-data.version>
         <hibernate.version>5.4.2.Final</hibernate.version>
-        <h2.version>1.4.199</h2.version>
+        <postgresql.version>42.2.6</postgresql.version>
         <jax.version>2.3.1</jax.version>
         <jws.version>3.1.2.2</jws.version>
         <jsp.version>1.2</jsp.version>
@@ -44,10 +44,9 @@
             <version>${hibernate.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>${h2.version}</version>
-            <scope>compile</scope>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.xml.ws</groupId>
@@ -73,6 +72,11 @@
             <artifactId>common</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.messaging.saaj</groupId>
+            <artifactId>saaj-impl</artifactId>
+            <version>1.5.0</version>
         </dependency>
     </dependencies>
 

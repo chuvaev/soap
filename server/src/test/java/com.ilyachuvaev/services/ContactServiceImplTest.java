@@ -6,13 +6,12 @@ import com.ilyachuvaev.entity.ContactMapper;
 import com.ilyachuvaev.repository.ContactRepository;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 public class ContactServiceImplTest {
 
-  @InjectMocks
+  @Mock
   private ContactServiceImpl recordService;
 
   @Mock

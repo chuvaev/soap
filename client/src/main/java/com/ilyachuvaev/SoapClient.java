@@ -1,22 +1,21 @@
 package com.ilyachuvaev;
 
-import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ws.client.core.WebServiceTemplate;
 
 import javax.xml.bind.JAXBElement;
 
 @Component
-@NoArgsConstructor
+@AllArgsConstructor
 public class SoapClient {
 //     http://localhost:8080/soapservice/ws/contacts.wsdl
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SoapClient.class);
 
-  private static WebServiceTemplate webServiceTemplate;
+  private final WebServiceTemplate webServiceTemplate;
 
   public Contact getContact(Long id) {
     ContactRequest contactRequest = new ObjectFactory().createContactRequest();

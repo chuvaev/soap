@@ -7,7 +7,7 @@ import com.ilyachuvaev.ContactResponse;
 import com.ilyachuvaev.ObjectFactory;
 import com.ilyachuvaev.entity.ContactMapper;
 import com.ilyachuvaev.services.ContactServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -15,16 +15,12 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 
 @Endpoint
+@RequiredArgsConstructor
 public class ContactServiceEndpoint {
 
-  private static final String TARGET_NAMESPACE = "http://localhost:8080/soapservice/ws";
+  private static final String TARGET_NAMESPACE = "http://localhost:8080/soapservice/ws/";
 
-  private ContactServiceImpl contactService;
-
-  @Autowired
-  public void setContactService(ContactServiceImpl contactService) {
-    this.contactService = contactService;
-  }
+  private final ContactServiceImpl contactService;
 
   @PayloadRoot(localPart = "getContact", namespace = TARGET_NAMESPACE)
   @ResponsePayload

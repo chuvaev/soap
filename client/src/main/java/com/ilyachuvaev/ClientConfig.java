@@ -11,7 +11,7 @@ public class ClientConfig {
   @Bean
   private Jaxb2Marshaller jaxb2Marshaller() {
     Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
-    jaxb2Marshaller.setContextPath("com.ilyachuvaev");
+    jaxb2Marshaller.setContextPath("http://localhost:8080/soapservice/ws");
     return jaxb2Marshaller;
   }
 

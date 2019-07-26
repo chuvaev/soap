@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/notification
+    username: notification
+    password: password
+  jpa:
+    properties:
+      hibernate:
+        jdbc.lob.non_contextual_creation: true
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+server: port=8080
+  server.servlet.context-path=/soapservice/ws/
