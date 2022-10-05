@@ -14,7 +14,7 @@
 
     <properties>
         <spring.ws.version>3.0.7.RELEASE</spring.ws.version>
-        <spring-data.version>2.1.8.RELEASE</spring-data.version>
+        <spring-data.version>2.1.9.RELEASE</spring-data.version>
         <hibernate.version>5.4.2.Final</hibernate.version>
         <postgresql.version>42.2.6</postgresql.version>
         <jax.version>2.3.1</jax.version>
