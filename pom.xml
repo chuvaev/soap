@@ -36,7 +36,7 @@
     <spring-oxm.version>5.1.5.RELEASE</spring-oxm.version>
     <spring-orm.version>5.1.5.RELEASE</spring-orm.version>
     <spring-ws-core.version>3.0.7.RELEASE</spring-ws-core.version>
-    <tomcat.version>9.0.17</tomcat.version>
+    <tomcat.version>9.0.72</tomcat.version>
     <wsdl4j.version>1.6.3</wsdl4j.version>
 
     <maven.clean.plugin>3.1.0</maven.clean.plugin>
